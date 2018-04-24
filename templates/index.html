@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Admin Interface</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet">
+
+   <script src="static/js/jquery-1.9.0.js"></script>
+   <script src="static/js/script.js"></script>
+
+  </head>
+
+  <body background="/static/image/background.jpg" style="background-repeat: no-repeat center center fixed; background-size: cover; height: 100%; overflow: hidden;">
+    <div align="center" class="container table-fixed">
+      <h1 class="form-signin-heading">Admin Interface</h1>
+      <br>
+      <br>
+      <div>
+        <button id="token_btn" class="btn btn-lg btn-primary">Check Token</button>
+        <div class="btn-lg" id="confirmationMessage"></div>
+      </div>
+      <div>
+        <button id="download_btn" class="btn btn-lg btn-info">Download Database</button>
+      </div>
+      <br>
+      <div>
+        <button id="database_btn" class="btn btn-lg btn-warning">Show Database</button>
+      </div>
+    </div>
+
+    <div id="database_div" class="table-responsive" style="visibility:hidden;">
+      <table class="table table-responsive" id="database_table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date and Time</th>
+            <th>Email Address</th>
+            <th>Active on Spark</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="database_table_body">
+        </tbody>
+      </table>
+      </div>
+<!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
