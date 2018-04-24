@@ -7,10 +7,13 @@ import datetime
 import csv
 from os.path import join, dirname
 from dotenv import load_dotenv
+#all of the modules which are required
 
+#loads in the .env file which contains sensitive information
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+#global variables
 ACCESS_TOKEN 	= os.getenv("ACCESS_TOKEN")
 YOUR_MESSAGE 	= "Hello. Welcome to your first Spark room, send a message to start."
 ADMIN_EMAIL		= os.getenv("ADMIN_EMAIL")
@@ -61,14 +64,7 @@ def postMsg(the_header,roomId,message):
 	uri = 'https://api.ciscospark.com/v1/messages'
 	resp = requests.post(uri, json=message, headers=the_header)
 
-def getDatabase():
-	con = lite.connect('spark.db')
-	with con:
-		cur = con.cursor()
-		cur.execute("SELECT * FROM Users")
-		rows = cur.fetchall()
-		return rows
-
+#checks to see if admin token is valid
 def testToken():
 	url = "https://api.ciscospark.com/v1/rooms"
 
@@ -81,6 +77,7 @@ def testToken():
 	response = requests.request("GET", url, headers=headers)
 	return response
 
+#check to see spark users status
 def checkStatus():
 	url = "https://api.ciscospark.com/v1/people"
 
@@ -94,6 +91,7 @@ def checkStatus():
 	#print(response.text)
 	return response.text
 
+#formats data to be viewed on webpage
 def processStatusData(data):
 	rows = {}
 	counter = 0
@@ -102,6 +100,7 @@ def processStatusData(data):
 		counter = counter + 1
 	return rows
 
+#format data to be downloaded
 def formatData2CSV(data):
 	rows = [[ 'User ID', 'Date/Time', 'Email Address', 'Active on Spark' ]];
 	counter = 1
@@ -111,6 +110,7 @@ def formatData2CSV(data):
 			counter = counter + 1
 	return rows
 
+#exports data to csv file
 def printCsv(data):
 	myFile = open('Users.csv', 'w')
 	with myFile:
@@ -118,6 +118,7 @@ def printCsv(data):
 		writer.writerows(data)
 		myFile.close()
 
+#set up webhook for specified room
 def webhook(roomId):
 	url = "https://api.ciscospark.com/v1/webhooks"
 	payload = {
@@ -134,10 +135,12 @@ def webhook(roomId):
 	    }
 	response = requests.request("POST", url, json=payload, headers=headers)
 
+#example landing page, can be modified in future
 @app.route('/', methods=['GET'])
 def hello():
 	return 'Welcome to Python Flask!'
 
+#add specified bot into room
 @app.route('/', methods=['POST'])
 def addBotToRoom():
 	requestData = request.get_json()
@@ -146,31 +149,37 @@ def addBotToRoom():
 	addMembers(header,roomId,BOT_EMAIL)
 	return "1"
 
+#used when user clicks on load database, to view in browser
 @app.route('/loadDatabase', methods=['GET'])
 def loadDatabase():
 	statusData = checkStatus()
 	rows = processStatusData(json.loads(statusData))
 	return json.dumps({'rows': rows})
 
+#calls function when download database button selected
 @app.route('/downloadDatabase', methods=['GET'])
 def downloadDatabase():
 	statusData = checkStatus()
 	csvData = formatData2CSV(json.loads(statusData))
 	printCsv(csvData)
 
+#function calls to check token is valid
 @app.route('/checkToken', methods=['GET'])
 def checkToken():
 	response = testToken()
 	return json.dumps({'status': response.status_code})
 
+# directs to admin splash page
 @app.route('/admin')
 def admin():
 	return render_template('index.html')
 
+#directs to sign up splash page
 @app.route('/signUp')
 def signUp():
 	return render_template('signUp.html')
 
+#sign up new user process
 @app.route('/signUpUser', methods=['POST'])
 def signUpUser():
 	user =  request.form['username'];
