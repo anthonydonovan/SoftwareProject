@@ -18,7 +18,7 @@ ACCESS_TOKEN 	= os.getenv("ACCESS_TOKEN")
 YOUR_MESSAGE 	= "Hello. Welcome to your first Spark room, send a message to start."
 ADMIN_EMAIL		= os.getenv("ADMIN_EMAIL")
 PUBLIC_URL		= os.getenv("PUBLIC_URL")
-BOT_EMAIL       = 'gifbot@sparkbot.io'
+BOT_EMAIL       = 'gifbot@webex.bot'
 
 app = Flask(__name__)
 
